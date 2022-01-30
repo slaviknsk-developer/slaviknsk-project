@@ -12,9 +12,11 @@ const defaultMode: PaletteMode = 'light';
 const ThemeContext = createContext<{
   mode: PaletteMode;
   toggleMode: () => void;
+  setMode: (mode: PaletteMode) => void;
 }>({
   mode: defaultMode,
   toggleMode: () => {},
+  setMode: (_mode) => {},
 });
 
 /**
@@ -26,14 +28,22 @@ export const useTheme = () => useContext(ThemeContext);
  * Mui5 theme provider
  */
 export const ThemeProvider: FC = ({ children }) => {
-  const [mode, setMode] = useState<PaletteMode>(defaultMode);
+  const [paletteMode, setPaletteMode] = useState<PaletteMode>(defaultMode);
 
   const toggleMode = useCallback(() => {
-    setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
+    setPaletteMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   }, []);
 
-  const value = useMemo(() => ({ mode, toggleMode }), [mode, toggleMode]);
-  const theme = useMemo(() => getTheme(mode), [mode]);
+  const setMode = useCallback((mode: PaletteMode) => {
+    setPaletteMode(mode);
+  }, []);
+
+  const value = useMemo(
+    () => ({ mode: paletteMode, toggleMode, setMode }),
+    [paletteMode, toggleMode, setMode]
+  );
+
+  const theme = useMemo(() => getTheme(paletteMode), [paletteMode]);
 
   return (
     <ThemeContext.Provider value={value}>
