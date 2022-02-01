@@ -1,6 +1,9 @@
 import { createTheme, PaletteOptions } from '@mui/material';
+import { ShapeOptions } from '@mui/system';
 // Mui colors
 import { common, grey, blue } from '@mui/material/colors';
+
+const shape: ShapeOptions = { borderRadius: 8 };
 
 const palette: PaletteOptions = {
   mode: 'light',
@@ -17,7 +20,7 @@ const palette: PaletteOptions = {
  */
 export const lightTheme = createTheme({
   direction: 'ltr',
-  shape: { borderRadius: 8 },
+  shape,
   palette,
   components: {
     MuiTypography: {
@@ -35,6 +38,14 @@ export const lightTheme = createTheme({
         root: {
           boxShadow: `inset 0px -1px 1px ${palette?.divider}`,
           background: palette?.background?.default,
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: shape?.borderRadius,
+          border: `1px solid ${palette?.divider}`,
         },
       },
     },

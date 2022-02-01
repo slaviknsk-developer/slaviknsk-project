@@ -2,23 +2,21 @@ import { FC } from 'react';
 // Mui components
 import { AppBar, Container, Box } from '@mui/material';
 // Components
-import { ThemeToggleIconButton, ThemeToggleButtonGroup } from 'components';
+import { AppLogo, ThemeToggler } from 'components';
 
 /**
  *
  */
-export const AppHeader: FC = () => {
+export const AppDesktopMenu: FC = () => {
   return (
     <AppBar position="sticky" color="default" elevation={0}>
       <Container sx={{ minHeight: 56, display: 'flex', alignItems: 'center' }} maxWidth="lg">
-        <Box>Logo</Box>
+        <AppLogo link />
 
-        <Box>Menu</Box>
+        <Box sx={{ marginLeft: ({ spacing }) => spacing(3) }}>Menu</Box>
 
         <Box sx={{ marginLeft: 'auto' }}>
-          <ThemeToggleButtonGroup size="small" />
-          <ThemeToggleButtonGroup />
-          <ThemeToggleButtonGroup size="large" />
+          <ThemeToggler variant="icon" size="small" />
         </Box>
       </Container>
     </AppBar>
