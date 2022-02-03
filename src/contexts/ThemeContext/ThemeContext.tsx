@@ -4,7 +4,7 @@ import { PaletteMode, ThemeProvider as Mui5ThemeProvider } from '@mui/material';
 // Theme
 import { getTheme } from 'theme';
 // Utils
-import { ls } from 'utils';
+import { setTheme as setStorageTheme, getTheme as getStorageTheme } from 'packages/storage';
 
 const defaultMode: PaletteMode = 'light';
 
@@ -30,22 +30,24 @@ export const useTheme = () => useContext(ThemeContext);
  * Mui5 theme provider
  */
 export const ThemeProvider: FC = ({ children }) => {
-  const lsMode = ls.getThemeMode(); // Theme mode from localStorage
-  const [paletteMode, setPaletteMode] = useState<PaletteMode>(lsMode ?? defaultMode);
+  const lsMode = getStorageTheme();
+  const [paletteMode, setPaletteMode] = useState<PaletteMode>(
+    (lsMode as PaletteMode) ?? defaultMode
+  );
 
-  if (!lsMode) ls.setThemeMode(paletteMode);
+  if (!lsMode) setStorageTheme(paletteMode);
 
   const toggleMode = useCallback(() => {
     setPaletteMode((prev) => {
       const mode = prev === 'light' ? 'dark' : 'light';
-      ls.setThemeMode(mode);
+      setStorageTheme(mode);
       return mode;
     });
   }, []);
 
   const setMode = useCallback((mode: PaletteMode) => {
     setPaletteMode(mode);
-    ls.setThemeMode(mode);
+    setStorageTheme(mode);
   }, []);
 
   const value = useMemo(
