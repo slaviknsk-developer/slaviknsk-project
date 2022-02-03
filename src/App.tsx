@@ -6,6 +6,10 @@ import { CssBaseline } from '@mui/material';
 import { PrivateLayout } from 'components';
 // Contexts
 import { ThemeProvider } from 'contexts';
+// Storage
+import storage from 'packages/storage';
+
+storage.setStorage(localStorage);
 
 /**
  * Main application component
